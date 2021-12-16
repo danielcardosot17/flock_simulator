@@ -51,7 +51,7 @@ public class Flock : MonoBehaviour
         {
             for(int i =0; i < startingCount; i++)
             {
-                spawnPosition = Vector3.ProjectOnPlane(Random.insideUnitCircle * startingCount * AgentDensity,verticalAxis) + verticalAxis * 2;
+                spawnPosition = Vector3.ProjectOnPlane(Random.insideUnitCircle * startingCount * AgentDensity,verticalAxis);
                 spawnRotation = Quaternion.Euler(verticalAxis * Random.Range(0f, 360f));
                 FlockAgent newAgent = Instantiate(
                     agentPrefab,

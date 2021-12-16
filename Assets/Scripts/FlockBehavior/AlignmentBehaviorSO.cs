@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AligmentBehaviorSO", menuName = "chicken_revolution/Flock/Behaviors/AligmentBehaviorSO", order = 0)]
-public class AligmentBehaviorSO : FilteredFlockBehaviorSO
+[CreateAssetMenu(fileName = "AlignmentBehaviorSO", menuName = "chicken_revolution/Flock/Behaviors/AlignmentBehaviorSO", order = 0)]
+public class AlignmentBehaviorSO : FilteredFlockBehaviorSO
 {
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
@@ -20,7 +20,7 @@ public class AligmentBehaviorSO : FilteredFlockBehaviorSO
             }
         }
         // Add all points together and average
-        Vector3 aligmentMove = Vector3.zero;
+        Vector3 alignmentMove = Vector3.zero;
         
         List<Transform> filteredContext = (filter == null) ? context : filter.Filter(agent,context);
 
@@ -28,17 +28,17 @@ public class AligmentBehaviorSO : FilteredFlockBehaviorSO
         {
             if(flock.verticalAxis == Vector3.up)
             {
-                aligmentMove += item.transform.forward;
+                alignmentMove += item.transform.forward;
             }
             else
             {
-                aligmentMove += item.transform.up;
+                alignmentMove += item.transform.up;
             }
         }
 
-        aligmentMove /= context.Count;
+        alignmentMove /= context.Count;
         
         // return Vector3.ProjectOnPlane(aligmentMove,Vector3.up);
-        return aligmentMove;
+        return alignmentMove;
     }
 }

@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef3608ea32ff7eb498037bb37d33b358, type: 3}
-  m_Name: AligmentBehavior
+  m_Script: {fileID: 11500000, guid: c996878a10e8f374f9cf3d62368be39f, type: 3}
+  m_Name: ObstaclesLayerFilter
   m_EditorClassIdentifier: 
-  filter: {fileID: 11400000, guid: e50155429bfcc944a8064ad41da995ca, type: 2}
+  mask:
+    serializedVersion: 2
+    m_Bits: 64
