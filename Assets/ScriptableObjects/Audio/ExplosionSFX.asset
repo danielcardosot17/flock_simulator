@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d6b4047b6ba72439566d5642d19602, type: 3}
+  m_Name: ExplosionSFX
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: effect1
+    clip: {fileID: 8300000, guid: 2fa22439429dca949b627ee482a7015e, type: 3}
+    priority: 96
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: effect2
+    clip: {fileID: 8300000, guid: b06372888c4aa234fa7de2c6f29091e6, type: 3}
+    priority: 96
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: effect3
+    clip: {fileID: 8300000, guid: 2a7b8ca1ce6973f46913d6063c48b2de, type: 3}
+    priority: 96
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: effect4
+    clip: {fileID: 8300000, guid: ccb4dd33282b4d64d9c241a9de0bc50a, type: 3}
+    priority: 96
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: effect5
+    clip: {fileID: 8300000, guid: 291fe4567b9a9024dbfcffab60142810, type: 3}
+    priority: 96
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: effect6
+    clip: {fileID: 8300000, guid: 80f068c4cf483634b994b0f877d586e2, type: 3}
+    priority: 96
+    volume: 1
+    pitch: 1
+    loop: 0

@@ -7,14 +7,15 @@ using UnityEngine;
 public class SimpleAudioEventSO : AudioEventSO
 {
     public Sound[] sounds;
-    public override void Play(AudioSource source)
+    public override void Play()
     {
         if(sounds.Length == 0) return;
 
         // if(source == null)
         // {
-        //     var obj = new GameObject(name: "Sound", typeof(AudioSource));
-        //     source = obj.GetComponent<AudioSource>();
+        var obj = new GameObject(name: "Sound", typeof(AudioSource));
+        // obj.AddComponent<AudioSource>();
+        var source = obj.GetComponent<AudioSource>();
         // }
 
         var randomNumber = Random.Range(0,sounds.Length);
@@ -24,9 +25,9 @@ public class SimpleAudioEventSO : AudioEventSO
         source.pitch = sounds[randomNumber].pitch;
         source.loop = sounds[randomNumber].loop;
         source.Play();
-        // if(!source.loop)
-        // {
-        //     Destroy(source.gameObject, source.clip.length/source.pitch);
-        // }
+        if(!source.loop)
+        {
+            Destroy(source.gameObject, source.clip.length/source.pitch);
+        }
     }
 }

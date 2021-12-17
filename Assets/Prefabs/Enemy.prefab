@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1141260455773430874}
   - component: {fileID: 1102912525309627154}
   - component: {fileID: 4948360787039691625}
-  m_Layer: 6
+  - component: {fileID: 6796177768204846347}
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +61,75 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 8
   turboMultiplier: 1.2
+  explosionCooldown: 5
+  colorChangeCooldown: 5
+  playersColorList:
+  - {r: 1, g: 0, b: 0, a: 1}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &6796177768204846347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2612346689833520129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 7b2abd4cd38a957469f0118e75e662ac, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4948360787039691625}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d10b86c2-7899-44e7-ae88-0a1eb8464b2b
+    m_ActionName: default/Movement[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4948360787039691625}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnTurbo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 42a4e54d-e903-45f5-8db7-8f4338226db2
+    m_ActionName: default/Turbo[/Keyboard/m,/Keyboard/z]
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: default
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &5995268656586697047
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8386409381199649139}
   - component: {fileID: 8152573793759373954}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: EnemySprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
