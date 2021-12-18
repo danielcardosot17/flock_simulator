@@ -112,12 +112,15 @@ public class PlayerHandler : MonoBehaviour
 
     public void StartGame()
     {
-        SpawnPlayers();
-        mainMenu.enabled = false;
-        flock.SetActive(true);
-        flock.GetComponent<Flock>().InitializeFlock();
-        hasStarted = true;
-        isEndgame = false;
+        if(numberOfPlayers > 1)
+        {
+            SpawnPlayers();
+            mainMenu.enabled = false;
+            flock.SetActive(true);
+            flock.GetComponent<Flock>().InitializeFlock();
+            hasStarted = true;
+            isEndgame = false;
+        }
     }
 
     public void RestartGame()
@@ -128,6 +131,22 @@ public class PlayerHandler : MonoBehaviour
         mainMenu.enabled = true;
         flock.GetComponent<Flock>().ResetFlock();
         flock.SetActive(false);
+        DestroyAllPlayersAndClearList();
+    }
+
+    private void DestroyAllPlayersAndClearList()
+    {
+        for(int i = players.Count - 1; i >= 0; i--)
+        {
+            DestroySinglePlayerAndRemoveFromList(players[i]);
+        }
+    }
+
+    public void DestroySinglePlayerAndRemoveFromList(GameObject player)
+    {
+        DecreasePlayerCount();
+        players.Remove(player);
+        Destroy(player);
     }
 
     public void SpawnPlayers()
