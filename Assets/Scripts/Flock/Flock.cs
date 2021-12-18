@@ -40,50 +40,10 @@ public class Flock : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        squareMaxSpeed = maxSpeed * maxSpeed;
-        squareNeigborRadius = neighborRadius * neighborRadius;
-        SquareAvoidanceRadius = squareNeigborRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;
-        var spawnPosition = Vector3.zero;
-        var spawnRotation = Quaternion.Euler(Vector3.zero);
-        if(planeMoveOnly)
-        {
-            for(int i =0; i < startingCount; i++)
-            {
-                spawnPosition = Vector3.ProjectOnPlane(Random.insideUnitCircle * startingCount * AgentDensity,verticalAxis);
-                spawnRotation = Quaternion.Euler(verticalAxis * Random.Range(0f, 360f));
-                FlockAgent newAgent = Instantiate(
-                    agentPrefab,
-                    spawnPosition,
-                    spawnRotation,
-                    transform
-                );
-                newAgent.name = "Agent " + i;
-                newAgent.Initialize(this);
-                agents.Add(newAgent);
-            }
-        }
-        else
-        {
-            for(int i =0; i < startingCount; i++)
-            {
-                spawnPosition = Random.insideUnitSphere * startingCount * AgentDensity;
-                spawnRotation = Quaternion.Euler(verticalAxis * Random.Range(0f, 360f));
-                FlockAgent newAgent = Instantiate(
-                    agentPrefab,
-                    spawnPosition,
-                    spawnRotation,
-                    transform
-                );
-                newAgent.name = "Agent " + i;
-                newAgent.Initialize(this);
-                agents.Add(newAgent);
-            }
-        }
-
-        
-    }
+    // void Start()
+    // {
+    //     InitializeFlock();
+    // }
 
     // Update is called once per frame
     void Update()
@@ -124,5 +84,67 @@ public class Flock : MonoBehaviour
         }
 
         return context;
+    }
+
+    public void ResetFlock()
+    {
+        DestroyAllAgentsAndClearList();
+    }
+
+    private void DestroyAllAgentsAndClearList()
+    {
+        for(int i = agents.Count - 1; i >= 0; i--)
+        {
+            DestroySingleAgentAndRemoveFromList(agents[i]);
+        }
+    }
+
+    public void DestroySingleAgentAndRemoveFromList(FlockAgent agent)
+    {
+        agents.Remove(agent);
+        Destroy(agent.gameObject);
+    }
+
+    public void InitializeFlock()
+    {
+        squareMaxSpeed = maxSpeed * maxSpeed;
+        squareNeigborRadius = neighborRadius * neighborRadius;
+        SquareAvoidanceRadius = squareNeigborRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;
+        var spawnPosition = Vector3.zero;
+        var spawnRotation = Quaternion.Euler(Vector3.zero);
+        if(planeMoveOnly)
+        {
+            for(int i =0; i < startingCount; i++)
+            {
+                spawnPosition = Vector3.ProjectOnPlane(Random.insideUnitCircle * startingCount * AgentDensity,verticalAxis);
+                spawnRotation = Quaternion.Euler(verticalAxis * Random.Range(0f, 360f));
+                FlockAgent newAgent = Instantiate(
+                    agentPrefab,
+                    spawnPosition,
+                    spawnRotation,
+                    transform
+                );
+                newAgent.name = "Agent " + i;
+                newAgent.Initialize(this);
+                agents.Add(newAgent);
+            }
+        }
+        else
+        {
+            for(int i =0; i < startingCount; i++)
+            {
+                spawnPosition = Random.insideUnitSphere * startingCount * AgentDensity;
+                spawnRotation = Quaternion.Euler(verticalAxis * Random.Range(0f, 360f));
+                FlockAgent newAgent = Instantiate(
+                    agentPrefab,
+                    spawnPosition,
+                    spawnRotation,
+                    transform
+                );
+                newAgent.name = "Agent " + i;
+                newAgent.Initialize(this);
+                agents.Add(newAgent);
+            }
+        }
     }
 }

@@ -13,8 +13,26 @@ MonoBehaviour:
   m_Name: MusicEventSO
   m_EditorClassIdentifier: 
   sounds:
-  - name: music
+  - name: music1
     clip: {fileID: 8300000, guid: 3c05dcac9acd43f4982cdab5fd7db84f, type: 3}
+    priority: 128
+    volume: 0.5
+    pitch: 1
+    loop: 1
+  - name: music2
+    clip: {fileID: 8300000, guid: 1b06836e464d5894a8212e97bcbf2bc5, type: 3}
+    priority: 128
+    volume: 0.5
+    pitch: 1
+    loop: 1
+  - name: music6
+    clip: {fileID: 8300000, guid: 1dcec0d03b2086a41abc2b1435fb3372, type: 3}
+    priority: 128
+    volume: 0.5
+    pitch: 1
+    loop: 1
+  - name: music7
+    clip: {fileID: 8300000, guid: 0c333c34d3b98a94d84d5f035df69b6c, type: 3}
     priority: 128
     volume: 0.5
     pitch: 1

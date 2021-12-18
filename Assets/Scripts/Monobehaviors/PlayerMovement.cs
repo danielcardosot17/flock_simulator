@@ -27,11 +27,13 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool justExploded = false;
 
-    private void Start() {
+    public Color PlayerColor { get => playerColor; private set => playerColor = value; }
+
+    private void Awake() {
         justExploded = false;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         var randomIndex = Random.Range(0,playersColorList.Count);
-        playerColor = playersColorList[randomIndex];
+        PlayerColor = playersColorList[randomIndex];
     }
     // Update is called once per frame
     void Update()
@@ -95,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
     private void Explode()
     {
         explosionSFX.Raise();
-        ChangeSpriteColor(playerColor);
+        ChangeSpriteColor(PlayerColor);
         justExploded = true;
         colorChangeTimer = colorChangeCooldown;
         explosionTimer = explosionCooldown;
