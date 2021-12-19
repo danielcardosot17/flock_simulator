@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,5 +34,10 @@ public class FlockAgent : MonoBehaviour
             transform.up = velocity.normalized;
             transform.position += velocity * Time.deltaTime;
         }
+    }
+
+    public void DestroyThisAgent()
+    {
+        agentFlock.DestroySingleAgentAndRemoveFromList(this);
     }
 }

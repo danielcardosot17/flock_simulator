@@ -10,18 +10,21 @@ public class PlayerHandler : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     public GameObject flock;
-    public Canvas mainMenu;
-    public Canvas endScreen;
+    public GameObject mainMenu;
+    public GameObject endScreen;
 
     public InputActionAsset controls; 
-    [Range(1,10)]  public float spawnRadius = 7;
+    [Range(1,15)]  public float spawnRadius = 15;
     
     public Text playerCountText;
     public Text winnerText;
     public InputField nameInput;
+
+    public AudioManager audioManager;
     private List<string> controlSchemeList;
     private List<GameObject> players;
     public List<GameObject> Players { get => players; private set => players = value; }
+    public List<Color> playersColorList;
     private List<string> playersNames;
     private int numberOfPlayers = 0;
     private bool isEndgame = false;
@@ -34,7 +37,7 @@ public class PlayerHandler : MonoBehaviour
         playerCountText.text = "0 Players: ";
         isEndgame = false;
         hasStarted = false;
-        mainMenu.enabled = true;
+        mainMenu.SetActive(true);
         flock.SetActive(false);
         Players = new List<GameObject>();
         playersNames = new List<string>();
@@ -60,7 +63,7 @@ public class PlayerHandler : MonoBehaviour
     private void EndGame()
     {
         isEndgame = true;
-        endScreen.enabled = true;
+        endScreen.SetActive(true);
         if(players.Count == 1)
         {
             winnerText.text = GetWinnerName() + " Boid Won!!";
@@ -115,7 +118,7 @@ public class PlayerHandler : MonoBehaviour
         if(numberOfPlayers > 1)
         {
             SpawnPlayers();
-            mainMenu.enabled = false;
+            mainMenu.SetActive(false);
             flock.SetActive(true);
             flock.GetComponent<Flock>().InitializeFlock();
             hasStarted = true;
@@ -126,12 +129,14 @@ public class PlayerHandler : MonoBehaviour
     public void RestartGame()
     {
         isEndgame = false;
-        endScreen.enabled = false;
+        endScreen.SetActive(false);
         hasStarted = false;
-        mainMenu.enabled = true;
+        mainMenu.SetActive(true);
         flock.GetComponent<Flock>().ResetFlock();
         flock.SetActive(false);
         DestroyAllPlayersAndClearList();
+        audioManager.StopMusic();
+        audioManager.PlayMusic();
     }
 
     private void DestroyAllPlayersAndClearList()
@@ -155,6 +160,9 @@ public class PlayerHandler : MonoBehaviour
         {
             var newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: controlSchemeList[i], pairWithDevice: Keyboard.current).gameObject;
             newPlayer.name = playersNames[i];
+            PlayerMovement player = newPlayer.GetComponent<PlayerMovement>();
+            player.Initialize(this);
+            player.SetPlayerColor(playersColorList[i]);
             Players.Add(newPlayer);
         }
         foreach(var player in Players)

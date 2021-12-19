@@ -11,12 +11,12 @@ public class PlayerMovement : MonoBehaviour
 
     [Range(1f,3f)] public float turboMultiplier = 1.2f;
     [Range(1f,10f)] public float explosionCooldown = 5f;
+    [Range(1f,10f)] public float explosionRadius = 5f;
     [Range(1f,10f)] public float colorChangeCooldown = 5f;
 
-    public List<Color> playersColorList;
     public LayerMask obstacleLayer;
-
     public AudioEventSO explosionSFX;
+    public GameObject explosionPrefab;
 
     private Vector3 direction = Vector3.zero;
     private float multiplier = 1;
@@ -27,15 +27,25 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool justExploded = false;
 
-    public Color PlayerColor { get => playerColor; private set => playerColor = value; }
+    private PlayerHandler handler;
+
+    public PlayerHandler Handler { get => handler; private set => handler = value; }
 
     private void Awake() {
         justExploded = false;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        var randomIndex = Random.Range(0,playersColorList.Count);
-        PlayerColor = playersColorList[randomIndex];
     }
     // Update is called once per frame
+    public void Initialize(PlayerHandler handler){
+        Handler = handler;
+    }
+    private void Start() {
+        ChangeSpriteColor(playerColor);
+        justExploded = true;
+        colorChangeTimer = colorChangeCooldown/2;
+        explosionTimer = explosionCooldown/2;
+    }
+
     void Update()
     {
         if(explosionTimer > 0)
@@ -97,10 +107,43 @@ public class PlayerMovement : MonoBehaviour
     private void Explode()
     {
         explosionSFX.Raise();
-        ChangeSpriteColor(PlayerColor);
+        ChangeSpriteColor(playerColor);
+        ExplosionAnimation();
+        DestroyObjectsInArea();
         justExploded = true;
         colorChangeTimer = colorChangeCooldown;
         explosionTimer = explosionCooldown;
+    }
+
+    private void DestroyObjectsInArea()
+    {
+        var objectsAffected = GetNearbyObjects();
+        foreach(var obj in objectsAffected)
+        {
+            var agent = obj.GetComponent<FlockAgent>();
+            var otherPlayer = obj.GetComponent<PlayerMovement>();
+            if(agent)
+            {
+                agent.DestroyThisAgent();
+            }
+            else if(otherPlayer)
+            {
+                Handler.DestroySinglePlayerAndRemoveFromList(otherPlayer.gameObject);
+            }
+        }
+    }
+
+    private void ExplosionAnimation()
+    {
+        var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        ParticleSystem.MainModule settings = explosion.GetComponent<ParticleSystem>().main;
+        Color minColor = new Color(playerColor.r/2,playerColor.g/2,playerColor.b/2);
+        settings.startColor = new ParticleSystem.MinMaxGradient(minColor, playerColor);
+    }
+
+    public void SetPlayerColor(Color color)
+    {
+        playerColor = color;
     }
 
     private void ChangeSpriteColor(Color color)
@@ -119,5 +162,26 @@ public class PlayerMovement : MonoBehaviour
                 Move(normalVector, multiplier);
             } 
         }
+    }
+
+    List<Transform> GetNearbyObjects()
+    {
+        List<Transform> context = new List<Transform>();
+        Collider[] contextColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        var playerCollider = GetComponent<Collider>();
+        foreach(Collider c in contextColliders)
+        {
+            if(c != playerCollider)
+            {
+                context.Add(c.transform);
+            }
+        }
+
+        return context;
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position,explosionRadius);
     }
 }

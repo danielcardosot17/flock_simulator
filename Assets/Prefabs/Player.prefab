@@ -61,8 +61,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 7
   turboMultiplier: 1.2
-  explosionCooldown: 5
-  colorChangeCooldown: 5
+  explosionCooldown: 4
+  explosionRadius: 4
+  colorChangeCooldown: 4
   playersColorList:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
@@ -73,6 +74,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   explosionSFX: {fileID: 11400000, guid: 45968347306f0a0439f82a7dc481a6b9, type: 2}
+  explosionPrefab: {fileID: 583695357301915952, guid: 9abcfda183823e14caaae6b1c4f00779, type: 3}
 --- !u!114 &7781213515072415435
 MonoBehaviour:
   m_ObjectHideFlags: 0

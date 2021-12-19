@@ -13,12 +13,13 @@ public class SimpleAudioEventSO : AudioEventSO
 
         // if(source == null)
         // {
-        var obj = new GameObject(name: "Sound", typeof(AudioSource));
+        var randomNumber = Random.Range(0,sounds.Length);
+        var soundObjectName = sounds[randomNumber].loop ? "Music":"SFX" ;
+        var obj = new GameObject(name: soundObjectName, typeof(AudioSource));
         // obj.AddComponent<AudioSource>();
         var source = obj.GetComponent<AudioSource>();
         // }
 
-        var randomNumber = Random.Range(0,sounds.Length);
         source.clip = sounds[randomNumber].clip;
         source.priority = sounds[randomNumber].priority;
         source.volume = sounds[randomNumber].volume;
